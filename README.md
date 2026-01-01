@@ -1,8 +1,69 @@
+# xv6 Lottery Scheduler
+
+A modified version of the xv6 operating system implementing a lottery scheduler to provide proportional-share CPU scheduling using tickets.
+
+### Overview
+
+This project replaces xv6’s default round-robin scheduler with a lottery-based scheduler, where runnable processes are assigned tickets and CPU time is allocated probabilistically based on ticket ownership. The implementation demonstrates kernel-level scheduling, synchronization, and fairness guarantees.
+
+### Key Features
+
+🎟️ Ticket-based scheduling for proportional CPU allocation
+
+⚖️ Fairness ensured through probabilistic selection
+
+🧮 Tracks and sums tickets across all runnable processes
+
+🧵 Supports multiple concurrent processes with predictable CPU shares
+
+🧪 Verified via multi-process stress tests and controlled experiments
+
+### Implementation Details
+
+Modified the process scheduler in proc.c
+
+Added per-process ticket accounting
+
+Implemented random ticket selection to choose the next runnable process
+
+Ensured correctness under concurrent workloads
+
+Preserved xv6 kernel invariants and process lifecycle semantics
+
+### Testing & Validation
+
+Ran multiple CPU-bound processes with different ticket counts
+
+Observed proportional CPU usage over time
+
+Verified absence of starvation and scheduling anomalies
+
+### Build & Run
+make clean
+make qemu
+
+### Files Modified
+
+proc.c – core scheduler logic
+
+proc.h – process structure updates
+
+
+### Learning Outcomes
+
+Deep understanding of OS scheduling algorithms
+
+Practical experience modifying a Unix-like kernel
+
+Insights into fairness, concurrency, and low-level systems design
+
+# NOTE
+
 xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
 but is implemented for a modern x86-based multiprocessor using ANSI C.
 
-ACKNOWLEDGMENTS
+# ACKNOWLEDGMENTS
 
 xv6 is inspired by John Lions's Commentary on UNIX 6th Edition (Peer
 to Peer Communications; ISBN: 1-57398-013-7; 1st edition (June 14,
@@ -28,20 +89,9 @@ Price, Yandong Mao, and Hitoshi Mitake.
 The code in the files that constitute xv6 is
 Copyright 2006-2007 Frans Kaashoek, Robert Morris, and Russ Cox.
 
-ERROR REPORTS
+# ERROR REPORTS
 
 If you spot errors or have suggestions for improvement, please send
 email to Frans Kaashoek and Robert Morris (kaashoek,rtm@csail.mit.edu). 
 
-BUILDING AND RUNNING XV6
 
-To build xv6 on an x86 ELF machine (like Linux or FreeBSD), run "make".
-On non-x86 or non-ELF machines (like OS X, even on x86), you will
-need to install a cross-compiler gcc suite capable of producing x86 ELF
-binaries.  See http://pdos.csail.mit.edu/6.828/2007/tools.html.
-Then run "make TOOLPREFIX=i386-jos-elf-".
-
-To run xv6, you can use Bochs or QEMU, both PC simulators.
-Bochs makes debugging easier, but QEMU is much faster. 
-To run in Bochs, run "make bochs" and then type "c" at the bochs prompt.
-To run in QEMU, run "make qemu".
